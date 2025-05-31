@@ -1,21 +1,21 @@
-// server.js
 const express = require('express');
-const app = express();
-const port = 3000;
+const cors = require('cors');
+const identify = require('./identify');
 
+const app = express();
+app.use(cors());
 app.use(express.json());
 
-app.post('/identify', (req, res) => {
-  console.log(req.body);
-  res.send({ message: 'Received!' });
+// Add this GET / route to confirm the API is running
+app.get('/', (req, res) => {
+  res.send('API is running!');
 });
 
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+// POST /identify
+app.post('/identify', identify);
+
+// Port for Render
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
-app.post('/identify', (req, res) => {
-    console.log("POST /identify called");
-    console.log(req.body);
-    res.send({ message: 'Received!' });
-  });
-  
